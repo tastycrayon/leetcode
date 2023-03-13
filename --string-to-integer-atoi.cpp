@@ -6,6 +6,7 @@ class Solution {
  public:
   int myAtoi(string s) {
     bool leadingWhiteSpaceFlag = true;
+    bool isPositive = true;
 
     return 0;
   }
