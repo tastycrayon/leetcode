@@ -27,26 +27,18 @@ class Solution {
       int digit2 = num2[i] - zero;
       for (int j = num1.length() - 1; j >= 0; j--) {
         int digit1 = num1[j] - zero, carry = 0;
-        int temp = digit1 * digit2 + carry;
-        int r = temp % 10;
-        carry = temp / 10;
-        result[resultIndex - i - j] += r;  // overflow possible
-
-        if (result[resultIndex - i - j] > 9) {
-          carry += result[resultIndex - i - j] / 10;
-          result[resultIndex - i - j] %= 10;
-        }
-
-        result[resultIndex - i - j + 1] += carry;  // carry
+        result[i + j + 1] += digit1 * digit2;
+        result[i + j] += result[i + j + 1] / 10;
+        result[i + j + 1] %= 10;
       }
     }
     string strResult;
     strResult.reserve(maxLength);
     bool checkForZero = 1;
-    for (int i = result.size() - 1; i >= 0; i--) {
+    for (int i = 0; i < result.size(); i++) {
       if (result[i] != 0) checkForZero = false;
       if (checkForZero) continue;
-      strResult.push_back(result[i] + zero);  // reversing
+      strResult.push_back(result[i] + zero);
     }
     return strResult;
   }
@@ -80,8 +72,6 @@ int main(int argc, char const *argv[]) {
         result : "3604876499018802870538090258945538",
       },
   };
-  string num1 = "hello";
-  string num2 = "ll";
 
   for (int i = 0; i < 4; i++) {
     string result = Solution().multiply(cases->num1, cases->num2);
